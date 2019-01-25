@@ -15,7 +15,7 @@ def funcitions(fun):
         PP = zdt1
     elif fun == 'ZDT2':
         f_num = 2;  # 目标函数个数
-        x_num = 30;  # 决策变量个数
+        x_num = 10;  # 决策变量个数
         x_min = np.zeros((1, x_num))  # 决策变量的最小值
         x_max = np.ones((1, x_num))  # 决策变量的最大值
         zdt2 = np.loadtxt('ZDT2.txt')
@@ -76,7 +76,9 @@ class partical():
                 sum1 = sum1 + x[i + 1]
             g = float(1 + 9 * (sum1 / (x_num - 1)))
             f2 = g * (1 - (f1 / g) ** (0.5))
-            self.f = [f1, f2]
+            self.fitness = [f1, f2]
+            self.crowding_distance=0
+            self.v=np.random.uniform(low=0,high=1,size=(x_num,))
         elif (fun == 'ZDT2'):
             f1 = float(x[0])
             sum1 = 0.0
@@ -85,6 +87,7 @@ class partical():
             g = float(1 + 9 * (sum1 / (x_num - 1)))
             f2 = g * (1 - (f1 / g) ** 2)
             self.fitness = [f1, f2]
+            self.crowding_distance = 0
         elif (fun == 'ZDT3'):
             f1 = float(x[0])
             sum1 = 0.0
@@ -92,7 +95,8 @@ class partical():
                 sum1 = sum1 + x[i + 1]
             g = float(1 + 9 * (sum1 / (x_num - 1)))
             f2 = g * (1 - (f1 / g) ** (0.5) - (f1 / g) * math.sin(10 * math.pi * f1))
-            self.f = [f1, f2]
+            self.fitness = [f1, f2]
+            self.crowding_distance = 0
         elif (fun == 'ZDT4'):
             f1 = float(x[0])
             sum1 = 0.0
@@ -100,7 +104,8 @@ class partical():
                 sum1 = sum1 + (x[i + 1]) ** 2 - 10 * math.cos(4 * math.pi * x[i + 1])
             g = float(1 + 9 * 10 + sum1)
             f2 = g * (1 - (f1 / g) ** (0.5))
-            self.f = [f1, f2]
+            self.fitness = [f1, f2]
+            self.crowding_distance = 0
         elif (fun == 'ZDT6'):
             f1 = float(1 - math.exp(-4 * x[0]) * (math.sin(6 * math.pi * x[0])) ** 6)
             sum1 = 0.0
@@ -108,7 +113,8 @@ class partical():
                 sum1 = sum1 + x[i + 1]
             g = float(1 + 9 * ((sum1 / (x_num - 1)) ** (0.25)))
             f2 = g * (1 - (f1 / g) ** 2)
-            self.f = [f1, f2]
+            self.fitness = [f1, f2]
+            self.crowding_distance = 0
         elif (fun == 'DTLZ1'):
             sum1 = 0.0
             for i in range(x_num - 2):
@@ -118,6 +124,7 @@ class partical():
             f2 = float((1 + g) * x[0] * (1 - x[1]))
             f3 = float((1 + g) * (1 - x[0]))
             self.f = [f1, f2, f3]
+            self.crowding_distance = 0
         elif (fun == 'DTLZ2'):
             sum1 = 0.0
             for i in range(x_num - 2):

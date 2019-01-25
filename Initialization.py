@@ -25,7 +25,7 @@ def initialization(N,f_num,x_num,x_min,x_max,fun):
             temp[1]=np.array([1.0 - float(i) / N])
             temp[2]=np.array([1.0 - float(N - i - 1) / N])
         lambda_=np.concatenate((lambda_,np.array([temp])))
-    return P, lambda_
+    return P, lambda_[1:]
 def Caculateminobj(P,N,f_num):
     z_star=np.zeros(f_num)
     min_1=P[0].fitness[0]
@@ -66,6 +66,6 @@ def init(N,T,fun,f_num, x_num, x_min, x_max, PP ):
     B=look_neighbor(lambda_,T)
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(P_fitness)
     for i in range(N):
-        if(dc[i]!=0):
-            A.append(P_fitness[i])
-    return P,A,B,z_star
+        if(dc[i]==0):
+            A.append(P[i])
+    return P,A,B,z_star,lambda_
